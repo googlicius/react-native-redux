@@ -1,6 +1,7 @@
+import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 
-export const Title = ({ children }) => (
+export default Title = ({ children }) => (
     <View style={styles.header}>
         <Text style={styles.title}>{children}</Text>
     </View>
@@ -8,7 +9,7 @@ export const Title = ({ children }) => (
 
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: 'blueskue',
+        backgroundColor: 'white',
         padding: 15
     },
     title: {

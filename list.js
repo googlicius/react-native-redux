@@ -1,19 +1,28 @@
 import React, { Component } from 'react'
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
+import { removeTodo } from './todo-list.action';
 
 class List extends Component {
-    state = {}
-
-    componentWillMount() {
-        this.setState({ todos: [] })
+    state = {
+        todos: []
     }
 
-    renderItem(text, i) {
-        const { onPressItem } = this.props;
+    componentWillMount() {
+        const { todos } = this.props;
+        this.setState({ todos });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        const { todos } = nextProps;
+        this.setState({ todos });
+    }
+
+    renderItem = (text, i) => {
+        const { removeTodo } = this.props;
 
         return (
-            <TouchableOpacity style={styles.item} onPress={() => onPressItem(i)}>
+            <TouchableOpacity style={styles.item} key={i} onPress={() => removeTodo(i)}>
                 <Text>{text}</Text>
             </TouchableOpacity>
         )
@@ -44,7 +53,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-
+    removeTodo
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(List);

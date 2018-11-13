@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
 import { TextInput, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
+import { addTodo } from './todo-list.action';
 
-export default class Input extends Component {
+class Input extends Component {
     state = {
         text: ''
     }
 
-    onChangeText(text) {
+    onChangeText = (text) => {
         this.setState({ text })
     }
 
-    onSubmitEditing() {
-        const { onSubmitEditing } = this.props;
+    onSubmitEditing = () => {
+        const { addTodo } = this.props;
         const { text } = this.state;
 
         if (!text) return false;
 
-        onSubmitEditing(text);
+        addTodo(text);
         this.setState({ text: '' })
     }
 
@@ -41,3 +43,9 @@ const styles = StyleSheet.create({
         height: 50,
     }
 });
+
+const mapDispatchToProps = {
+    addTodo
+}
+
+export default connect(null, mapDispatchToProps)(Input);
