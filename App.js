@@ -1,35 +1,47 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
-import axios from 'axios';
-import { Provider, connect } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import axiosMiddleware from 'redux-axios-middleware';
-import Input from './input';
-import List from './list';
-import Title from './title';
-import { reducer } from './todo-list.reducer';
-
-const client = axios.create({
-  baseURL: 'https://api.github.com',
-  responseType: 'json'
-});
-
-const store = createStore(reducer, applyMiddleware(axiosMiddleware(client)));
+import Toggle from './Toggle';
 
 export default class App extends Component {
-  addTodo() {
-    console.log("Add to-do");
+  state = {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 
-  render () {
+  render() {
+    const { flexDirection, justifyContent, alignItems } = this.state;
+    const layoutStyles = { flexDirection, justifyContent, alignItems };
+
+    const primaryAxis = flexDirection === 'row' ? 'Horizontal' : 'Vertical';
+    const secondaryAxis = flexDirection === 'row' ? 'Horizontal' : 'Vertical';
+
     return (
-      <Provider store={store}>
-        <View style={styles.container}>
-          <Title>To-do list</Title>
-          <Input placeholder="Type your to-do..." />
-          <List />
+      <View style={styles.container}>
+        <Toggle
+          label={'Primary axis (flexDirection)'}
+          value={flexDirection}
+          options={['row', 'column']}
+          onChange={(option) => this.setState({ flexDirection: option })} />
+
+        <Toggle
+          label={primaryAxis + ' distribution (justifyContent)'}
+          value={justifyContent}
+          options={['flex-start', 'center', 'flex-end', 'space-around', 'space-between']}
+          onChange={(option) => this.setState({ justifyContent: option })} />
+
+        <Toggle
+          label={secondaryAxis + ' alignment (alignItems'}
+          value={alignItems}
+          options={['flex-start', 'center', 'flex-end', 'stretch']}
+          onChange={option => this.setState({ alignItems: option })} />
+
+        <View style={[styles.layout, layoutStyles]}>
+          <View style={styles.box} />
+          <View style={styles.box} />
+          <View style={styles.box} />
         </View>
-      </Provider>
+      </View>
     )
   }
 }
@@ -39,5 +51,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     marginTop: 50
+  },
+  layout: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.05)'
+  },
+  box: {
+    padding: 25,
+    backgroundColor: 'steelblue',
+    margin: 5
   }
 });
