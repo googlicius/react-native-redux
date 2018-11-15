@@ -1,47 +1,20 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import Toggle from './Toggle';
+import { View, StyleSheet } from 'react-native';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import Todo from './todo';
+import { reducer } from './reducer';
+
+const store = createStore(reducer);
 
 export default class App extends Component {
-  state = {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-
   render() {
-    const { flexDirection, justifyContent, alignItems } = this.state;
-    const layoutStyles = { flexDirection, justifyContent, alignItems };
-
-    const primaryAxis = flexDirection === 'row' ? 'Horizontal' : 'Vertical';
-    const secondaryAxis = flexDirection === 'row' ? 'Horizontal' : 'Vertical';
-
     return (
-      <View style={styles.container}>
-        <Toggle
-          label={'Primary axis (flexDirection)'}
-          value={flexDirection}
-          options={['row', 'column']}
-          onChange={(option) => this.setState({ flexDirection: option })} />
-
-        <Toggle
-          label={primaryAxis + ' distribution (justifyContent)'}
-          value={justifyContent}
-          options={['flex-start', 'center', 'flex-end', 'space-around', 'space-between']}
-          onChange={(option) => this.setState({ justifyContent: option })} />
-
-        <Toggle
-          label={secondaryAxis + ' alignment (alignItems'}
-          value={alignItems}
-          options={['flex-start', 'center', 'flex-end', 'stretch']}
-          onChange={option => this.setState({ alignItems: option })} />
-
-        <View style={[styles.layout, layoutStyles]}>
-          <View style={styles.box} />
-          <View style={styles.box} />
-          <View style={styles.box} />
+      <Provider store={store}>
+        <View style={styles.container}>
+          <Todo />
         </View>
-      </View>
+      </Provider>
     )
   }
 }
