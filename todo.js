@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, Alert } from 'react-native';
 import Input from './components/input';
 import List from './components/list';
 import { connect } from 'react-redux';
@@ -15,12 +15,28 @@ class Todo extends Component {
 
     onAddTodo = () => {
         const { AddTodo } = this.props;
-        AddTodo(this.state.inputValue);
-        this.setState({ inputValue: null });
+        if(this.state.inputValue !== null && this.state.inputValue.trim().length > 0) {
+            AddTodo(this.state.inputValue);
+            this.setState({ inputValue: null });
+        }
+    }
+
+    handleRemoveTodo = (i) => {
+        const { RemoveTodo, todos } = this.props;
+        const todoToRemove = todos.find((todo, index) => index == i);
+        if(!todoToRemove.completed) {
+            Alert.alert("Chưa hoàn thành", "Task này chưa hoàn thành, bạn có chắc muốn xóa?", [
+                { text: "OK", onPress: () => RemoveTodo(i) },
+                { text: "Hủy", onPress: () => {}, style: 'cancel' }
+            ])
+        }
+        else {
+            RemoveTodo(i);
+        }
     }
 
     render() {
-        const { todos, ToggleCompleted, RemoveTodo } = this.props;
+        const { todos, ToggleCompleted } = this.props;
         return (
             <View>
                 <Input
@@ -29,7 +45,7 @@ class Todo extends Component {
                     onChangeText={this.onChangeText} 
                     onSubmitEditing={this.onAddTodo} 
                 />
-                <List todos={todos} onToggleCompleted={ToggleCompleted} onRemove={RemoveTodo} />
+                <List todos={todos} onToggleCompleted={ToggleCompleted} onRemove={this.handleRemoveTodo} />
             </View>
         )
     }

@@ -14,7 +14,7 @@ export const reducer = (state = initialState, action) => {
         case fromAction.ActionTypes.ADD:
             return {
                 ...state,
-                todos: [...state.todos, { text: action.text, completed: false }]
+                todos: [...state.todos, { text: action.text.trim(), completed: false }]
             }
 
         case fromAction.ActionTypes.TOGGLE_COMPLETED:
