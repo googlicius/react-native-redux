@@ -43,9 +43,12 @@ class Todo extends Component {
                     value={this.state.inputValue}
                     placeholder={'Học React Native...'} 
                     onChangeText={this.onChangeText} 
-                    onSubmitEditing={this.onAddTodo} 
-                />
-                <List todos={todos} onToggleCompleted={ToggleCompleted} onRemove={this.handleRemoveTodo} />
+                    onSubmitEditing={this.onAddTodo} />
+
+                <List 
+                    todos={todos} 
+                    onToggleCompleted={ToggleCompleted} 
+                    onRemove={this.handleRemoveTodo} />
             </View>
         )
     }
