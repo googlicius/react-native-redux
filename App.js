@@ -31,7 +31,7 @@ export default class App extends Component {
           onChange={(option) => this.setState({ justifyContent: option })} />
 
         <Toggle
-          label={secondaryAxis + ' alignment (alignItems'}
+          label={secondaryAxis + ' alignment (alignItems)'}
           value={alignItems}
           options={['flex-start', 'center', 'flex-end', 'stretch']}
           onChange={option => this.setState({ alignItems: option })} />
