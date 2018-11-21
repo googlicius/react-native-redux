@@ -13,7 +13,7 @@ export default class Game extends React.Component {
     }
 
     componentWillMount() {
-        this.setState({playground: this.props.playground })
+        this.setState({ playground: this.props.playground })
     }
 
     toggleSelected = (index) => {
@@ -72,7 +72,7 @@ export default class Game extends React.Component {
 
     undo = () => {
         const playground = this.state.histories.pop();
-        if(playground) {
+        if (playground) {
             this.setState({ playground })
         }
     }
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     },
     reset_btn: {
         backgroundColor: 'whitesmoke',
-        padding: 10 
+        padding: 10
     },
     defdkjf: {
     }
