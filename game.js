@@ -67,7 +67,10 @@ export default class Game extends React.Component {
     )
 
     reset = () => {
-        this.setState({ playground: this.props.playground });
+        this.setState({ 
+            playground: this.props.playground,
+            histories: []
+        });
     }
 
     undo = () => {
